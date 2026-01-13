@@ -25,10 +25,13 @@ int IntList::sum() const {
 
 // returns true if value is in the list; false if not
 bool IntList::contains(int value) const {
-    return false; // REPLACE THIS NON-SOLUTION
+	for (Node *left = head; left; left = left->next;) {
+		if (left == value) return true;
+	}
+	return false;
 }
 
-// returns maximum value in list, or 0 if empty list
+// returns maximum value in list, or 0 if empty lit
 int IntList::max() const {
     return 0; // REPLACE THIS NON-SOLUTION
 }
@@ -41,12 +44,13 @@ double IntList::average() const {
 
 // inserts value as new node at beginning of list
 void IntList::push_front(int value) {
-    // IMPLEMENT
+	head = new Node{value, head};
 }
 
 // append value at end of list
 void IntList::push_back(int value) {
-    // IMPLEMENT
+	tail->next = new Node{value, nullptr};
+	tail = tail->next;
  
 }
 
