@@ -9,68 +9,109 @@ using std::cout;
 
 // copy constructor
 IntList::IntList(const IntList& source) {
-    //IMPLEMENT THIS
+    head = tail = nullptr;
+    for (Node *curr = source.head; curr; curr = curr->next) {
+        //cout << "balls\n";
+        push_back(curr->info);
+    }
 }
 
 // destructor deletes all nodes
 IntList::~IntList() {
-    //IMPLEMENT THIS
+    Node* curr = head;
+    Node* next;
+    while (curr) {
+        next = curr->next;
+        delete curr;
+        curr = next;
+    }
+
 }
 
 
 // return sum of values in list
 int IntList::sum() const {
-    return 0; // REPLACE THIS NON-SOLUTION
+    int sum = 0;
+    for (Node *curr = head; curr; curr = curr->next) {
+        sum += curr->info;
+    }
+    return sum;
 }
 
 // returns true if value is in the list; false if not
 bool IntList::contains(int value) const {
-	for (Node *left = head; left; left = left->next;) {
-		if (left == value) return true;
+	for (Node *left = head; left; left = left->next) {
+		if (left->info == value) return true;
 	}
 	return false;
 }
 
 // returns maximum value in list, or 0 if empty lit
 int IntList::max() const {
-    return 0; // REPLACE THIS NON-SOLUTION
+    if (!head) return 0;
+    int max = head->info;
+    for (Node *curr = head; curr; curr = curr->next) {
+        if (max < curr->info) max = curr->info;
+    }
+    return max;
 }
 
 // returns average (arithmetic mean) of all values, or
 // 0 if list is empty
 double IntList::average() const {
-    return 0.0; // REPLACE THIS NON-SOLUTION
+    if (!head) return 0.0;
+    return float(this->sum()) / this->count();
 }
 
 // inserts value as new node at beginning of list
 void IntList::push_front(int value) {
 	head = new Node{value, head};
+    if (!tail) tail = head;
 }
 
 // append value at end of list
 void IntList::push_back(int value) {
-	tail->next = new Node{value, nullptr};
-	tail = tail->next;
+    //std::cout << "balls\n";
+    if (!head) {
+        tail = head = new Node{value, nullptr};
+    } else {
+        tail->next = new Node{value, nullptr};
+        tail = tail->next;
+    }
  
 }
 
 // return count of values
 int IntList::count() const {
-   //IMPLEMENT THIS
-   return 0;
+    int count = 0;
+    for (Node *curr = head; curr; curr = curr->next) {
+        count++;
+    }
+    return count;
 }
 
 
 //Assignment operator should copy the list from the source
 //to this list, deleting/replacing any existing nodes
 IntList& IntList::operator=(const IntList& source){
-    //IMPLEMENT
+    //Node* curr = head;
+    Node* next;
+    while (head) {
+        next = head->next;
+        delete head;
+        head = next;
+    }
+    head = tail = nullptr;
+    for (Node *curr = source.head; curr; curr = curr->next) {
+        //cout << "balls\n";
+        push_back(curr->info);
+    }
     return *this;
 }
 
 // constructor sets up empty list
 IntList::IntList(){ 
-    //IMPLEMENT THIS 
+    head = tail = nullptr;
 }
 
 
